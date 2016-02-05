@@ -15,8 +15,8 @@ execute 'ln -s .dotfiles/.zshrc' do
   not_if 'test -e .zshrc'
 end
 
-user 'vagrant' do
-  # user 'vagrant'
+user 'change shell to zsh' do
+  username 'vagrant'  # username の指定がなければ、user resource の後の文字列が入る
   password 'vagrant'
   shell '/usr/bin/zsh'
 end
