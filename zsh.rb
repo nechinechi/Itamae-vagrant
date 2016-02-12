@@ -2,14 +2,15 @@ package 'zsh' do
   action :install
 end
 
-git '~/.dotfiles' do
-  destination '~/.dotfiles'
-  repository 'git://github.com/nechinechi/dotfiles.git'
-  not_if 'test -e /home/vagrant/.rbenv'
+git 'clone .dotfiles' do
+  destination '.dotfiles'
+  repository 'https://github.com/nechinechi/dotfiles.git'
+  not_if 'test -e .dotfiles'
 end
 
 link '.zshrc' do
   to '~/.dotfiles/.zshrc'
+  only_if 'test -e .dotfiles'
   not_if 'test -e .zshrc'
 end
 

@@ -1,13 +1,14 @@
-execute 'git clone https://github.com/nechinechi/.vim.git' do
+# execute 'git clone https://github.com/nechinechi.vim.git' do
+git 'clone .vim' do
+  destination '.vim'
+  repository 'https://github.com/nechinechi/.vim.git'
   not_if 'test -e .vim'
+  # revision 'HEAD'
 end
-# git 'clone .vim' do
-#   destination '~/'
-#   repository 'git@github.com:nechinechi/.vim.git'
-#   revision 'HEAD'
-#   only_if 'test -e .vim'
-# end
 
-execute 'ln -s .vim/.vimrc' do
+link '.vimrc' do
+  to '~/.vim/.vimrc'
+  only_if 'test -e .vim'
   not_if 'test -e .vimrc'
 end
+
