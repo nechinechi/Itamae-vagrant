@@ -1,5 +1,6 @@
 git '/home/vagrant/.rbenv' do
   repository 'git://github.com/sstephenson/rbenv.git'
+  not_if 'test -e /home/vagrant/.rbenv'
 end
 
 execute 'set environment' do

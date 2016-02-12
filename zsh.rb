@@ -2,16 +2,14 @@ package 'zsh' do
   action :install
 end
 
-# execute 'change shell' do
-#   command 'chsh -s /usr/bin/zsh'
-#           # echo vagrant'
-# end
-
-execute 'git clone https://github.com/nechinechi/dotfiles.git .dotfiles' do
-  not_if 'test -e .dotfiles'
+git '~/.dotfiles' do
+  destination '~/.dotfiles'
+  repository 'git://github.com/nechinechi/dotfiles.git'
+  not_if 'test -e /home/vagrant/.rbenv'
 end
 
-execute 'ln -s .dotfiles/.zshrc' do
+link '.zshrc' do
+  to '~/.dotfiles/.zshrc'
   not_if 'test -e .zshrc'
 end
 
