@@ -1,0 +1,18 @@
+/usr/bin/ruby.exe -r ./siteconf20160226-9900-1gi11e8.rb extconf.rb
+creating Makefile
+
+make "DESTDIR=" clean
+rm -f 
+rm -f generator.so  *.o  *.bak mkmf.log .*.time
+
+make "DESTDIR="
+gcc -I. -I/usr/include/ruby-2.2.0 -I/usr/include/ruby-2.2.0/ruby/backward -I/usr/include/ruby-2.2.0 -I. -DJSON_GENERATOR     -ggdb -O2 -pipe -Wimplicit-function-declaration    -o generator.o -c generator.c
+rm -f generator.so
+gcc -shared -o generator.so generator.o -L. -L/usr/lib -L. -fstack-protector -Wl,--export-all-symbols -Wl,--enable-auto-image-base,--enable-auto-import    -lruby220  -lpthread -lgmp -ldl -lcrypt  
+/usr/lib/gcc/x86_64-pc-cygwin/4.9.3/../../../../x86_64-pc-cygwin/bin/ld: -lgmp が見つかりません
+/usr/lib/gcc/x86_64-pc-cygwin/4.9.3/../../../../x86_64-pc-cygwin/bin/ld: -lcrypt が見つかりません
+collect2: エラー: ld はステータス 1 で終了しました
+Makefile:254: ターゲット 'generator.so' のレシピで失敗しました
+make: *** [generator.so] エラー 1
+
+make failed, exit code 2

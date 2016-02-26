@@ -25,6 +25,7 @@ Vagrant.configure(2) do |config|
   config.vm.provision :itamae do |itamae|
     itamae.sudo = true
     itamae.recipes = ['recipe.rb']
+    # itamae.json = ['node.json']
     # config.shell = '/usr/bin/zsh'
   end
 

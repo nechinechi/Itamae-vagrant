@@ -15,7 +15,10 @@ link '.zshrc' do
 end
 
 user 'change shell to zsh' do
-  username 'vagrant'  # username の指定がなければ、user resource の後の文字列が入る
+  # username の指定がなければ、user resource の後の文字列が入る
+  # username node["user"] #'vagrant'
+  username 'vagrant'
+  # password node["passwd"] #'vagrant'
   password 'vagrant'
   shell '/usr/bin/zsh'
 end

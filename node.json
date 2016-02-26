@@ -1,1 +1,4 @@
-{'passwd': 'vagrant'}
+{
+  "user" : "vagrant",
+  "passwd" : "vagrant"
+}

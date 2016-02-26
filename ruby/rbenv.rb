@@ -6,7 +6,12 @@ end
 
 execute 'set environment' do
   command %q(echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.zshrc)
+  not_if %q(cat .zshrc | grep 'export PATH="$HOME/.rbenv/bin:$PATH"')
+end
+
+execute 'set environment' do
   command %q(echo 'eval "$(rbenv init -)"' >> ~/.zshrc)
+  not_if %q(cat .zshrc | grep 'eval "$(rbenv init -)"')
 end
 
 # git '/home/vagrant/.rbenv/plugins/ruby-build' do
