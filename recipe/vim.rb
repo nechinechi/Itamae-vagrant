@@ -6,8 +6,7 @@ git 'clone .vim' do
   # revision 'HEAD'
 end
 
-# execute "sudo chown -hR #{node["user"]} .vim" do
-execute "sudo chown -hR vagrant .vim" do
+execute "sudo chown -hR #{node[:user][:name]} .vim" do
   only_if 'test -e .vim'
 end
 
@@ -17,8 +16,7 @@ link '.vimrc' do
   not_if 'test -e .vimrc'
 end
 
-# execute "sudo chown -hR #{node["user"]} .vimrc" do
-execute "sudo chown -hR vagrant .vimrc" do
+execute "sudo chown -hR #{node[:user][:name]} .vimrc" do
   only_if 'test -e .vimrc'
 end
 
