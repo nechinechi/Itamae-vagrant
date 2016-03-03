@@ -3,22 +3,26 @@ package 'zsh' do
 end
 
 git 'clone .dotfiles' do
+  # user node[:user][:name]
   destination '.dotfiles'
   repository 'https://github.com/nechinechi/dotfiles.git'
   not_if 'test -e .dotfiles'
 end
 
-execute "sudo chown -hR #{node[:user][:name]} .dotfiles" do
+execute "sudo chown -hR #{node[:user][:name]}:#{node[:user][:group]} .dotfiles" do
+  # user node[:user][:name]
   only_if 'test -e .dotfiles'
 end
 
 link '.zshrc' do
+  # user node[:user][:name]
   to '~/.dotfiles/.zshrc'
   only_if 'test -e .dotfiles'
   not_if 'test -e .zshrc'
 end
 
-execute "sudo chown -hR #{node[:user][:name]} .zshrc" do
+execute "sudo chown #{node[:user][:name]}:#{node[:user][:group]} .zshrc" do
+  # user node[:user][:name]
   only_if 'test -e .zshrc'
 end
 
