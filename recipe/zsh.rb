@@ -6,24 +6,23 @@ git 'clone .dotfiles' do
   # user node[:user][:name]
   destination '.dotfiles'
   repository 'https://github.com/nechinechi/dotfiles.git'
-  not_if 'test -e .dotfiles'
+  not_if 'test -d .dotfiles'
 end
 
 execute "sudo chown -hR #{node[:user][:name]}:#{node[:user][:group]} .dotfiles" do
-  # user node[:user][:name]
-  only_if 'test -e .dotfiles'
+  only_if 'test -d .dotfiles'
 end
 
 link '.zshrc' do
   # user node[:user][:name]
-  to '~/.dotfiles/.zshrc'
-  only_if 'test -e .dotfiles'
-  not_if 'test -e .zshrc'
+  to '.dotfiles/.zshrc'
+  only_if 'test -d .dotfiles'
+  not_if 'test -L .zshrc'
 end
 
-execute "sudo chown #{node[:user][:name]}:#{node[:user][:group]} .zshrc" do
+execute "sudo chown -h #{node[:user][:name]}:#{node[:user][:group]} .zshrc" do
   # user node[:user][:name]
-  only_if 'test -e .zshrc'
+  only_if 'test -L .zshrc'
 end
 
 user 'change shell to zsh' do
