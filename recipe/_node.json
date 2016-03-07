@@ -1,0 +1,11 @@
+{
+  "user" : {
+    "name" : "hoge",
+    "passwd" : "hoge",
+    "group" : "hoge"
+  },
+  "git" : {
+    "username" : "hoge",
+    "e_mail" : "hoge"
+  }
+}
