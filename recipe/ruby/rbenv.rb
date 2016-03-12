@@ -86,16 +86,17 @@ execute %q(echo 'source /etc/profile.d/rbenv.sh' >> .zshenv) do
 end
 
 
-# %w(libffi-dev libreadline6-dev libssl-dev make zlib1g-dev)
-# %w(libffi libffi-devel zlib zlib-devel openssl openssl-devel readline-devel).each |pkg| do
-#   package pkg do
-#     not_if "dpkg -l #{pkg}"
-#   end
-# end
-
-execute "rbenv install #{node[:ruby][:version]}" do
-  user node[:user][:name]
-  not_if "ruby -v | grep #{node[:ruby][:version]}"
+execute 'apt-get update'
+%w(libffi-dev libreadline6-dev libssl-dev make zlib1g-dev).each do |pkg|
+# %w(libffi libffi-devel zlib zlib-devel openssl openssl-devel readline-devel).each do |pkg|
+  package pkg do
+    not_if "dpkg -l #{pkg}"
+  end
 end
+
+# execute "sh rbenv.sh && rbenv install #{node[:ruby][:version]}" do
+#   user node[:user][:name]
+#   not_if "rbenv versions | grep #{node[:ruby][:version]}"
+# end
 
 
