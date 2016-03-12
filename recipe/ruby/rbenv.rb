@@ -56,17 +56,22 @@ end
 # end
 execute %q(echo 'export RBENV_ROOT="/usr/local/rbenv"' >> rbenv.sh) do
   cwd '/etc/profile.d'
-  not_if %q(cat rbenv.sh | grep 'export RBENV_ROOT="/usr/local/rbenv"')
+  not_if %q(grep 'export RBENV_ROOT="/usr/local/rbenv"' rbenv.sh)
 end
 
 execute %q(echo 'export PATH="/usr/local/rbenv/bin:$PATH"' >> rbenv.sh) do
   cwd '/etc/profile.d'
-  not_if %q(cat rbenv.sh | grep 'export PATH="/usr/local/rbenv/bin:$PATH"')
+  not_if %q(grep 'export PATH="/usr/local/rbenv/bin:$PATH"' rbenv.sh)
 end
 
 execute %q(echo 'eval "$(rbenv init -)"' >> rbenv.sh) do
   cwd '/etc/profile.d'
-  not_if %q(cat rbenv.sh | grep 'eval "$(rbenv init -)"')
+  not_if %q(grep 'eval "$(rbenv init -)"' rbenv.sh)
+end
+
+execute 'chgrp rbenv rbenv.sh' do
+  cwd '/etc/profile.d'
+  only_if 'test -e rbenv.sh'
 end
 
 # execute 'sh rbenv.sh' do
@@ -85,10 +90,9 @@ execute %q(echo 'source /etc/profile.d/rbenv.sh' >> .zshenv) do
   not_if %q(grep 'source /etc/profile.d/rbenv.sh' .zshenv)
 end
 
-
 execute 'apt-get update'
+
 %w(libffi-dev libreadline6-dev libssl-dev make zlib1g-dev).each do |pkg|
-# %w(libffi libffi-devel zlib zlib-devel openssl openssl-devel readline-devel).each do |pkg|
   package pkg do
     not_if "dpkg -l #{pkg}"
   end
