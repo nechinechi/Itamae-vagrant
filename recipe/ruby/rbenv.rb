@@ -1,6 +1,3 @@
-# execute 'groupadd rbenv' do
-#   not_if 'getent group rbenv'
-# end
 group 'rbenv' do
   not_if 'getent group rbenv'
 end
@@ -79,13 +76,6 @@ end
 #   # user "#{node[:user][:name]}"
 #   not_if 'which rbenv'
 # end
-# [
-# 'export RBENV_ROOT="/usr/local/rbenv"',
-# 'export PATH="/usr/local/rbenv/bin:$PATH"',
-# 'eval "$(rbenv init -)"'
-# ].each |command| do
-#   execute command
-# end
 execute %q(echo 'source /etc/profile.d/rbenv.sh' >> .zshenv) do
   not_if %q(grep 'source /etc/profile.d/rbenv.sh' .zshenv)
 end
@@ -93,14 +83,12 @@ end
 execute 'apt-get update'
 
 %w(libffi-dev libreadline6-dev libssl-dev make zlib1g-dev).each do |pkg|
-  package pkg do
-    not_if "dpkg -l #{pkg}"
-  end
+  package pkg
 end
 
-# execute "sh rbenv.sh && rbenv install #{node[:ruby][:version]}" do
-#   user node[:user][:name]
-#   not_if "rbenv versions | grep #{node[:ruby][:version]}"
-# end
+execute "su - #{node[:user][:name]} -c '/usr/local/rbenv/libexec/rbenv install #{node[:ruby][:version]}'" do
+  # user "#{node[:user][:name]}"
+  not_if "rbenv versions | grep #{node[:ruby][:version]}"
+end
 
 
