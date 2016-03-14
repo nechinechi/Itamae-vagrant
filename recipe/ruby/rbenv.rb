@@ -2,13 +2,15 @@ group 'rbenv' do
   not_if 'getent group rbenv'
 end
 
+# root を rbenv グループに
 execute 'usermod -aG rbenv root' do
   not_if 'groups root | grep rbenv'
 end
 
-execute "usermod -aG rbenv #{node[:user][:name]}" do
-  not_if "groups #{node[:user][:name]} | grep rbenv"
-end
+# vagrant を rbenv グループに
+# execute "usermod -aG rbenv #{node[:user][:name]}" do
+#   not_if "groups #{node[:user][:name]} | grep rbenv"
+# end
 
 git 'clone rbenv' do
   # cwd '/usr/local'
@@ -71,11 +73,6 @@ execute 'chgrp rbenv rbenv.sh' do
   only_if 'test -e rbenv.sh'
 end
 
-# execute 'sh rbenv.sh' do
-#   cwd '/etc/profile.d'
-#   # user "#{node[:user][:name]}"
-#   not_if 'which rbenv'
-# end
 execute %q(echo 'source /etc/profile.d/rbenv.sh' >> .zshenv) do
   not_if %q(grep 'source /etc/profile.d/rbenv.sh' .zshenv)
 end
@@ -86,9 +83,8 @@ execute 'apt-get update'
   package pkg
 end
 
-execute "su - #{node[:user][:name]} -c '/usr/local/rbenv/libexec/rbenv install #{node[:ruby][:version]}'" do
+execute "su - -c '/usr/local/rbenv/bin/rbenv install #{node[:ruby][:version]}'" do
   # user "#{node[:user][:name]}"
-  not_if "rbenv versions | grep #{node[:ruby][:version]}"
+  not_if "su - -c '/usr/local/rbenv/bin/rbenv versions' | grep #{node[:ruby][:version]}"
 end
-
 
