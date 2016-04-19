@@ -1,4 +1,4 @@
 recipe/node.json
-.vagrant
-.bundle
 vendor
+.bundle
+.vagrant
