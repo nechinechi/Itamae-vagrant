@@ -53,28 +53,29 @@ end
 #   content 'export RBENV_ROOT="/usr/local/rbenv"\n'
 #   not_if %q(cat rbenv.sh | grep 'export RBENV_ROOT="/usr/local/rbenv"')
 # end
-execute %q(echo 'export RBENV_ROOT="/usr/local/rbenv"' >> rbenv.sh) do
-  cwd '/etc/profile.d'
-  not_if %q(grep 'export RBENV_ROOT="/usr/local/rbenv"' rbenv.sh)
+execute %(echo 'export RBENV_ROOT="#{node[:rbenv][:path]}"' >> rbenv.sh) do
+  cwd "#{node[:zsh][:common_dir]}/zprofile.d"
+  not_if %(grep 'export RBENV_ROOT="#{node[:rbenv][:path]}"' rbenv.sh)
 end
 
-execute %q(echo 'export PATH="/usr/local/rbenv/bin:$PATH"' >> rbenv.sh) do
-  cwd '/etc/profile.d'
-  not_if %q(grep 'export PATH="/usr/local/rbenv/bin:$PATH"' rbenv.sh)
+execute %q(echo 'export PATH="$RBENV_ROOT/bin:$PATH"' >> rbenv.sh) do
+  cwd "#{node[:zsh][:common_dir]}/zprofile.d"
+  not_if %q(grep 'export PATH="$RBENV_ROOT/bin:$PATH"' rbenv.sh)
 end
 
 execute %q(echo 'eval "$(rbenv init -)"' >> rbenv.sh) do
-  cwd '/etc/profile.d'
+  cwd "#{node[:zsh][:common_dir]}/zprofile.d"
   not_if %q(grep 'eval "$(rbenv init -)"' rbenv.sh)
 end
 
 execute 'chgrp rbenv rbenv.sh' do
-  cwd '/etc/profile.d'
+  cwd "#{node[:zsh][:common_dir]}/zprofile.d"
   only_if 'test -e rbenv.sh'
 end
 
-execute %q(echo 'source /etc/profile.d/rbenv.sh' >> .zshenv) do
-  not_if %q(grep 'source /etc/profile.d/rbenv.sh' .zshenv)
+execute %(echo 'source #{node[:zsh][:common_dir]}/zprofile.d/rbenv.sh' >> zshenv) do
+  cwd "#{node[:zsh][:common_dir]}"
+  not_if %(grep 'source #{node[:zsh][:common_dir]}/zprofile.d/rbenv.sh' zshenv)
 end
 
 execute 'apt-get update'
@@ -83,7 +84,7 @@ execute 'apt-get update'
   package pkg
 end
 
-execute "su - -c '/usr/local/rbenv/bin/rbenv install #{node[:ruby][:version]}'" do
+ execute "su - -c '/usr/local/rbenv/bin/rbenv install #{node[:ruby][:version]}'" do
   # user "#{node[:user][:name]}"
   not_if "su - -c '/usr/local/rbenv/bin/rbenv versions' | grep #{node[:ruby][:version]}"
 end

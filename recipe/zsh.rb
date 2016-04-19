@@ -30,4 +30,5 @@ user 'change shell to zsh' do
   username node[:user][:name]
   password node[:user][:passwd]
   shell '/usr/bin/zsh'
+  not_if 'echo $SHELL | grep zsh'
 end
