@@ -1,5 +1,6 @@
 package 'sl'
 
+execute 'apt-get update'
 # include_recipe 'golang.rb'
 include_recipe 'git.rb'
 include_recipe 'zsh.rb'

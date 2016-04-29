@@ -78,8 +78,6 @@ execute %(echo 'source #{node[:zsh][:common_dir]}/zprofile.d/rbenv.sh' >> zshenv
   not_if %(grep 'source #{node[:zsh][:common_dir]}/zprofile.d/rbenv.sh' zshenv)
 end
 
-execute 'apt-get update'
-
 %w(libffi-dev libreadline6-dev libssl-dev make zlib1g-dev).each do |pkg|
   package pkg
 end
