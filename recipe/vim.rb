@@ -7,6 +7,11 @@ git 'clone .vim' do
   # revision 'HEAD'
 end
 
+execute "sh ./installer.sh #{node[:vim][:dein_dir]}" do
+  cwd '.vim'
+  not_if "test -d #{node[:vim][:dein_dir]}"
+end
+
 execute "sudo chown -hR #{node[:user][:name]}:#{node[:user][:group]} .vim" do
   only_if 'test -d .vim'
 end

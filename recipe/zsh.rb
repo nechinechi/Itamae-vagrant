@@ -33,6 +33,6 @@ user 'change shell to zsh' do
   not_if 'echo $SHELL | grep zsh'
 end
 
-directory 'create zprofile.d' do
-  cwd "#{node[:zsh][:common_dir]}"
-end
+# directory 'create zprofile.d' do
+#   path '#{node[:zsh][:common_dir]}/zprofile.d'
+# end

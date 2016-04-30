@@ -82,7 +82,7 @@ end
   package pkg
 end
 
- execute "su - -c '/usr/local/rbenv/bin/rbenv install #{node[:ruby][:version]}'" do
+execute "su - -c '/usr/local/rbenv/bin/rbenv install #{node[:ruby][:version]}'" do
   # user "#{node[:user][:name]}"
   not_if "su - -c '/usr/local/rbenv/bin/rbenv versions' | grep #{node[:ruby][:version]}"
 end

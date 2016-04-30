@@ -4,16 +4,24 @@
     "passwd" : "vagrant",
     "group" : "vagrant"
   },
+
   "zsh": {
     "common_dir" : "/etc/zsh"
   },
+
+  "vim": {
+    "dein_dir" : "dein"
+  },
+
   "git": {
     "username" : "nechinechi",
     "e_mail" : "s13t245@stmail.eng.kagawa-u.ac.jp"
   },
+
   "rbenv": {
     "path" : "/usr/local/rbenv"
   },
+
   "ruby": {
     "version" : "2.3.0"
   }
