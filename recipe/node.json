@@ -5,6 +5,10 @@
     "group" : "vagrant"
   },
 
+  "bash": {
+    "prof_dir" : "/etc/profile.d"
+  },
+
   "zsh": {
     "common_dir" : "/etc/zsh"
   },

@@ -36,3 +36,30 @@ end
 # directory 'create zprofile.d' do
 #   path '#{node[:zsh][:common_dir]}/zprofile.d'
 # end
+
+# execute %(echo 'source #{node[:zsh][:common_dir]}/zprofile.d/rbenv.sh' >> zshenv) do
+#   cwd "#{node[:zsh][:common_dir]}"
+#   not_if %(grep 'source #{node[:zsh][:common_dir]}/zprofile.d/rbenv.sh' zshenv)
+# end
+
+# file '/etc/zsh/zprofile' do
+#   action :edit
+#   
+# end
+
+[
+  "if [ -d /etc/profile.d ]; then",
+  "  for i in /etc/profile.d/*.sh; do",
+  "    if [ -r $i ]; then",
+  "       . $i",
+  "    fi",
+  "  done",
+  "  unset i",
+  "fi",
+  "# read profile.d of bash"
+].each do |line|
+  execute "echo '#{line}' >> zprofile" do
+    cwd "#{node[:zsh][:common_dir]}"
+    not_if 'grep "# read profile.d of bash" zprofile'
+  end
+end

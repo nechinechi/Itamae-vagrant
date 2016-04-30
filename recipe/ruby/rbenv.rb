@@ -54,28 +54,23 @@ end
 #   not_if %q(cat rbenv.sh | grep 'export RBENV_ROOT="/usr/local/rbenv"')
 # end
 execute %(echo 'export RBENV_ROOT="#{node[:rbenv][:path]}"' >> rbenv.sh) do
-  cwd "#{node[:zsh][:common_dir]}/zprofile.d"
+  cwd "#{node[:bash][:prof_dir]}"
   not_if %(grep 'export RBENV_ROOT="#{node[:rbenv][:path]}"' rbenv.sh)
 end
 
 execute %q(echo 'export PATH="$RBENV_ROOT/bin:$PATH"' >> rbenv.sh) do
-  cwd "#{node[:zsh][:common_dir]}/zprofile.d"
+  cwd "#{node[:bash][:prof_dir]}"
   not_if %q(grep 'export PATH="$RBENV_ROOT/bin:$PATH"' rbenv.sh)
 end
 
 execute %q(echo 'eval "$(rbenv init -)"' >> rbenv.sh) do
-  cwd "#{node[:zsh][:common_dir]}/zprofile.d"
+  cwd "#{node[:bash][:prof_dir]}"
   not_if %q(grep 'eval "$(rbenv init -)"' rbenv.sh)
 end
 
 execute 'chgrp rbenv rbenv.sh' do
-  cwd "#{node[:zsh][:common_dir]}/zprofile.d"
+  cwd "#{node[:bash][:prof_dir]}"
   only_if 'test -e rbenv.sh'
-end
-
-execute %(echo 'source #{node[:zsh][:common_dir]}/zprofile.d/rbenv.sh' >> zshenv) do
-  cwd "#{node[:zsh][:common_dir]}"
-  not_if %(grep 'source #{node[:zsh][:common_dir]}/zprofile.d/rbenv.sh' zshenv)
 end
 
 %w(libffi-dev libreadline6-dev libssl-dev make zlib1g-dev).each do |pkg|
