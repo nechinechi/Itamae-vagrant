@@ -1,8 +1,10 @@
 package 'sl'
 
-execute 'apt-get update'
+# execute 'apt-get update'
 # include_recipe 'golang.rb'
-include_recipe 'git.rb'
-include_recipe 'zsh.rb'
-include_recipe 'vim.rb'
-include_recipe 'ruby/rbenv.rb'
+
+# include_recipe 'git.rb'
+# include_recipe 'zsh.rb'
+# include_recipe 'vim.rb'
+# include_recipe 'ruby/rbenv.rb'
+include_recipe 'mysql.rb'

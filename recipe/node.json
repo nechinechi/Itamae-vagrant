@@ -1,8 +1,8 @@
 {
   "user": {
-    "name" : "vagrant",
+    "name"   : "vagrant",
     "passwd" : "vagrant",
-    "group" : "vagrant"
+    "group"  : "vagrant"
   },
 
   "bash": {
@@ -19,7 +19,7 @@
 
   "git": {
     "username" : "nechinechi",
-    "e_mail" : "s13t245@stmail.eng.kagawa-u.ac.jp"
+    "e_mail"   : "s13t245@stmail.eng.kagawa-u.ac.jp"
   },
 
   "rbenv": {
@@ -28,5 +28,15 @@
 
   "ruby": {
     "version" : "2.3.0"
-  }
+  },
+
+  "mysql": {
+      "path" : "/etc/mysql",
+      "user" : {
+        "vagrant" : {
+          "name"   : "vagrant",
+          "passwd" : "vagrant"
+        }
+      }
+   }
 }
