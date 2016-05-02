@@ -8,9 +8,9 @@ execute 'usermod -aG rbenv root' do
 end
 
 # vagrant を rbenv グループに
-# execute "usermod -aG rbenv #{node[:user][:name]}" do
-#   not_if "groups #{node[:user][:name]} | grep rbenv"
-# end
+execute "usermod -aG rbenv #{node[:user][:name]}" do
+  not_if "groups #{node[:user][:name]} | grep rbenv"
+end
 
 git 'clone rbenv' do
   # cwd '/usr/local'
@@ -19,10 +19,9 @@ git 'clone rbenv' do
   not_if 'test -d /usr/local/rbenv'
 end
 
-execute 'mkdir plugins' do
+directory 'plugins' do
   cwd '/usr/local/rbenv'
-  only_if 'test -d /usr/local/rbenv'
-  not_if 'test -d /usr/local/rbenv/plugins'
+  not_if 'test -d plugins'
 end
 
 execute 'chgrp -R rbenv rbenv' do
@@ -82,3 +81,6 @@ execute "su - -c '/usr/local/rbenv/bin/rbenv install #{node[:ruby][:version]}'" 
   not_if "su - -c '/usr/local/rbenv/bin/rbenv versions' | grep #{node[:ruby][:version]}"
 end
 
+execute "su - -c 'rbenv global #{node[:ruby][:version]}'" do
+  not_if "rbenv global | #{node[:ruby][:version]}"
+end
