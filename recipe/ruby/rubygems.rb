@@ -21,7 +21,7 @@ end
   package pkg
 end
 
-%w(bison openssl curl zlib1g libyaml-dev).each do |pkg|
+%w(bison openssl curl zlib1g libyaml-dev nodejs).each do |pkg|
   package pkg
 end
 
@@ -31,7 +31,7 @@ end
 #   end
 # end
 
-execute "su - -c 'gem update --system'"
+# execute "su - -c 'gem update --system'"
 
 %w(nokogiri rails bundler).each do |gem|
   execute "su - -c 'gem install #{gem}'" do

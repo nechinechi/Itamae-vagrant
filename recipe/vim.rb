@@ -1,9 +1,9 @@
 # execute 'git clone https://github.com/nechinechi.vim.git' do
 git 'clone .vim' do
   # user node[:user][:name]
-  destination '.vim'
+  destination "#{node[:vim][:dir]}"
   repository 'https://github.com/nechinechi/.vim.git'
-  not_if 'test -d .vim'
+  not_if "test -d #{node[:vim][:dir]}"
   # revision 'HEAD'
 end
 
@@ -13,13 +13,13 @@ end
 
 link '.vimrc' do
   # user node[:user][:name]
-  to '.vim/.vimrc'
+  to "#{node[:vim][:dir]}/.vimrc"
   only_if 'test -d .vim'
   not_if 'test -L .vimrc'
 end
 
 execute "sh ./installer.sh #{node[:vim][:dein_dir]}" do
-  cwd '.vim'
+  cwd "/usr/#{node[:user][:name]}/#{node[:vim][:dir]}"
   not_if "test -d #{node[:vim][:dein_dir]}"
 end
 
