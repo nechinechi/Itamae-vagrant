@@ -7,8 +7,8 @@ git 'clone .vim' do
   # revision 'HEAD'
 end
 
-execute "sudo chown -hR #{node[:user][:name]}:#{node[:user][:group]} .vim" do
-  only_if 'test -d .vim'
+execute "sudo chown -hR #{node[:user][:name]}:#{node[:user][:group]} #{node[:vim][:dir]}" do
+  only_if "test -d #{node[:vim][:dir]}"
 end
 
 link '.vimrc' do

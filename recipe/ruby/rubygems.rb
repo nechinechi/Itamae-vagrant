@@ -1,8 +1,3 @@
-# package 'gem' do
-#   options '--force-yes'
-#   not_if 'which gem'
-# end
-
 # package 'gcc-c++'
 
 # %w(libxml2 libxslt libxml2-devel libxslt-devel).each do |pkg|

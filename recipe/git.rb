@@ -1,6 +1,6 @@
 package 'git'
 
-# 設定
+# global 設定
 confirm = '# done provisioning with Itamae'
 [
   %(user.name "#{node[:git][:username]}"),
