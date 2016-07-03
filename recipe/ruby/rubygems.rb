@@ -4,9 +4,9 @@
 #   package pkg
 # end
 
-%w(libxml2-dev libxslt-dev).each do |pkg|
-  package pkg
-end
+# %w(libxml2-dev libxslt-dev).each do |pkg|
+#   package pkg
+# end
 
 %w(build-essential patch ruby-dev zlib1g-dev liblzma-dev).each do |pkg|
   package pkg
@@ -20,16 +20,17 @@ end
   package pkg
 end
 
-# %w(rails bundler).each do |gem|
-#   gem_package gem do
-#     action :install
-#   end
+# %w(nokogiri rails bundler).each do |gem|
+#   gem_package gem
 # end
 
 # execute "su - -c 'gem update --system'"
 
-%w(nokogiri rails bundler).each do |gem|
+%w(nokogiri rails bundler pry).each do |gem|
   execute "su - -c 'gem install #{gem}'" do
     not_if "su - -c '#{gem} -v'"
+    user 'root'
   end
 end
+
+# gem_package 'pry'

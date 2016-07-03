@@ -13,12 +13,17 @@ execute "sudo chown -hR #{node[:user][:name]}:#{node[:user][:group]} .dotfiles" 
   only_if 'test -d .dotfiles'
 end
 
-link '.zshrc' do
-  # user node[:user][:name]
-  to '.dotfiles/.zshrc'
+execute "./sym_link.sh" do
+  cwd '.dotfiles/'
   only_if 'test -d .dotfiles'
   not_if 'test -L .zshrc'
 end
+# link '.zshrc' do
+#   # user node[:user][:name]
+#   to '.dotfiles/.zshrc'
+#   only_if 'test -d .dotfiles'
+#   not_if 'test -L .zshrc'
+# end
 
 execute "sudo chown -h #{node[:user][:name]}:#{node[:user][:group]} .zshrc" do
   # user node[:user][:name]
@@ -29,7 +34,8 @@ user 'change shell to zsh' do
   # username の指定がなければ、user resource の後の文字列が入る
   username node[:user][:name]
   password node[:user][:passwd]
-  shell '/usr/bin/zsh'
+  # shell '/usr/bin/zsh'
+  shell '`which zsh`'
   not_if 'echo $SHELL | grep zsh'
 end
 
@@ -44,7 +50,6 @@ end
 
 # file '/etc/zsh/zprofile' do
 #   action :edit
-#   
 # end
 
 [
