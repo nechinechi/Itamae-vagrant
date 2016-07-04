@@ -3,13 +3,12 @@ group 'rbenv' do
 end
 
 # res = run_command("cd /usr/local && ls -l | grep rbenv", error: false)
-# print res
+# print res.stdout
 
-# test = run_command("ls", error: false)
-test = run_command("ls")
-output = run_command("ls").stdout
-puts test.stdout
-puts output
+# test = run_command("ls -a")
+# output = run_command("ls -a", error: false)
+# puts test.stdout
+# puts output.stdout
 
 # root を rbenv グループに
 execute 'usermod -aG rbenv root' do

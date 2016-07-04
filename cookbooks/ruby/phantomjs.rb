@@ -1,5 +1,10 @@
 package 'libicu52'
-execute 'curl --output /usr/local/bin/phantomjs https://s3.amazonaws.com/circle-support-bucket/phantomjs/phantomjs-2.0.1-linux-x86_64-dynamic'
+
+execute 'get source of phatnomjs' do
+  command 'curl --output /usr/local/bin/phantomjs https://s3.amazonaws.com/circle-support-bucket/phantomjs/phantomjs-2.0.1-linux-x86_64-dynamic' 
+  not_if 'test -e /usr/local/bin/phantomjs'
+end
+
 execute 'chmod a+x /usr/local/bin/phantomjs'
 
 ## References https://github.com/muratayusuke/itamae-plugin-recipe-phantomjs/blob/master/lib/itamae/plugin/recipe/phantomjs/source.rb
