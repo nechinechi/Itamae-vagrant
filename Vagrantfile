@@ -25,8 +25,8 @@ Vagrant.configure(2) do |config|
   config.vm.provision :itamae do |itamae|
     itamae.sudo = true
     itamae.recipes = ['roles/recipe.rb']
-    itamae.json = File.join(__dir__, "recipe", "node.json")
-    itamae.shell = '/bin/bash'
+    itamae.json = File.join(__dir__, 'node', 'node.json')
+    itamae.shell = '/bin/sh'
   end
 
   # Disable automatic box update checking. If you disable this, then
