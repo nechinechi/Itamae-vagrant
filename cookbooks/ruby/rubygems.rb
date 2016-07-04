@@ -32,5 +32,11 @@ end
     user 'root'
   end
 end
+# %w(nokogiri rails bundler pry).each do |gem|
+#   execute "gem install #{gem}" do
+#     not_if "#{gem} -v"
+#     user 'root'
+#   end
+# end
 
 # gem_package 'pry'

@@ -5,8 +5,11 @@ end
 # res = run_command("cd /usr/local && ls -l | grep rbenv", error: false)
 # print res
 
-test = run_command("ls", error: false)
+# test = run_command("ls", error: false)
+test = run_command("ls")
+output = run_command("ls").stdout
 puts test.stdout
+puts output
 
 # root を rbenv グループに
 execute 'usermod -aG rbenv root' do
