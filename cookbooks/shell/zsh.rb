@@ -3,17 +3,18 @@ package 'zsh' do
 end
 
 git 'clone .dotfiles' do
-  # user node[:user][:name]
+  user node[:user][:name]
   destination '.dotfiles'
   repository 'https://github.com/nechinechi/dotfiles.git'
   not_if 'test -d .dotfiles'
 end
 
-execute "sudo chown -hR #{node[:user][:name]}:#{node[:user][:group]} .dotfiles" do
-  only_if 'test -d .dotfiles'
-end
+# execute "sudo chown -hR #{node[:user][:name]}:#{node[:user][:group]} .dotfiles" do
+#   only_if 'test -d .dotfiles'
+# end
 
 execute "./sym_link.sh" do
+  user node[:user][:name]
   cwd '.dotfiles/'
   only_if 'test -d .dotfiles'
   not_if 'test -L .zshrc'
@@ -25,19 +26,19 @@ end
 #   not_if 'test -L .zshrc'
 # end
 
-execute "sudo chown -h #{node[:user][:name]}:#{node[:user][:group]} .zshrc" do
-  # user node[:user][:name]
-  only_if 'test -L .zshrc'
-end
+# execute "sudo chown -h #{node[:user][:name]}:#{node[:user][:group]} .zshrc" do
+#   # user node[:user][:name]
+#   only_if 'test -L .zshrc'
+# end
 
-user 'change shell to zsh' do
-  # username の指定がなければ、user resource の後の文字列が入る
-  username node[:user][:name]
-  password node[:user][:passwd]
-  # shell '/usr/bin/zsh'
-  shell '`which zsh`'
-  not_if 'echo $SHELL | grep zsh'
-end
+# user 'change shell to zsh' do
+#   # username の指定がなければ、user resource の後の文字列が入る
+#   username node[:user][:name]
+#   password node[:user][:passwd]
+#   # shell '/usr/bin/zsh'
+#   shell '`which zsh`'
+#   not_if 'echo $SHELL | grep zsh'
+# end
 
 # directory 'create zprofile.d' do
 #   path '#{node[:zsh][:common_dir]}/zprofile.d'

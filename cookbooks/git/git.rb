@@ -10,10 +10,12 @@ confirm = '# provisioned with Itamae'
   "pull.default current"
 ].each do |setting|
   execute "git config --global #{setting}" do
+    user node[:user][:name]
     not_if "grep '#{confirm}' .gitconfig"
   end
 end
 
 execute "echo '#{confirm}' >> .gitconfig" do
+  user node[:user][:name]
   not_if "grep '#{confirm}' .gitconfig"
 end
