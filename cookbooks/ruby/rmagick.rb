@@ -10,3 +10,7 @@ execute "gem install rmagick --no-ri --no-rdoc" do
   not_if "gem list | grep rmagick"
   user 'root'
 end
+
+gem_package 'rmagick' do
+  options ['--no-ri', '--no-rdoc']
+end
