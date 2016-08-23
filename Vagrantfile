@@ -24,8 +24,8 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision :itamae do |itamae|
     itamae.sudo = true
-    itamae.recipes = ['roles/recipe.rb']
-    itamae.json = File.join(__dir__, 'nodes', 'node.json')
+    itamae.recipes = ['Itamae-vagrant/roles/recipe.rb']
+    itamae.json = File.join(__dir__, 'Itamae-vagrant/nodes', 'node.json')
     itamae.shell = '/bin/sh'
   end
 
