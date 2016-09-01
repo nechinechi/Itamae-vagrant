@@ -69,3 +69,11 @@ end
     not_if 'grep "# read profile.d of bash" zprofile'
   end
 end
+
+## solarized clone
+git 'clone .solarized' do
+  user node[:user][:name]
+  destination '.solarized'
+  repository 'https://github.com/seebi/dircolors-solarized'
+  not_if 'test -d .solarized'
+end
